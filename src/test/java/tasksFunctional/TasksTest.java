@@ -2,24 +2,30 @@ package tasksFunctional;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.Duration;
 
 public class TasksTest {
 
-    public WebDriver abrirNavegador() {
-        WebDriver driver = new ChromeDriver();
+    public WebDriver abrirNavegador() throws MalformedURLException {
+        ChromeOptions cap = new ChromeOptions();
+        //DesiredCapabilities cap = new DesiredCapabilities("Chrome", "100", Platform.WIN10);
+        WebDriver driver = new RemoteWebDriver(new URL("http://localhost:4444"), cap);
         driver.navigate().to("http://localhost:8001/tasks/");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         return driver;
     }
 
-
     @Test
-    public void deveSalvarTarefaComSucesso(){
+    public void deveSalvarTarefaComSucesso() throws MalformedURLException {
         WebDriver driver = abrirNavegador();
 
         try {
@@ -37,7 +43,7 @@ public class TasksTest {
     }
 
     @Test
-    public void naoDeveSalvarTarefaComSucesso(){
+    public void naoDeveSalvarTarefaComSucesso() throws MalformedURLException {
         WebDriver driver = abrirNavegador();
 
         try {
